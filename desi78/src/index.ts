@@ -1,3 +1,3 @@
 // index.ts : entry point
 
-export * from './pointedCorners/myPartL';
+export * from './printer3d/doorstop';
