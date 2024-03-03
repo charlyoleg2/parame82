@@ -72,7 +72,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		// step-6 : any logs
 		rGeome.logstr += `doorstop length ${ffix(Ltot)} mm, angle ${ffix(radToDeg(a1))} degree\n`;
 		// step-7 : drawing of the figures
-		// fig1
+		// figProfile
 		const ctrDoorstop = contour(0, 0)
 			.addCornerRounded(param.R1)
 			.addSegStrokeA(Ltot, 0)
