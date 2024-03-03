@@ -14,10 +14,10 @@ import type {
 } from 'geometrix';
 import {
 	contour,
-	//contourCircle,
+	contourCircle,
 	figure,
 	//degToRad,
-	//radToDeg,
+	radToDeg,
 	ffix,
 	pNumber,
 	//pCheckbox,
@@ -52,6 +52,9 @@ const pDef: tParamDef = {
 	}
 };
 
+// internal constrains
+const minRadius = 2;
+
 // step-3 : definition of the function that creates from the parameter-values the figures and construct the 3D
 function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 	const rGeome = initGeom(pDef.partName + suffix);
@@ -60,12 +63,14 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 	try {
 		// step-4 : some preparation calculation
 		const Ltot = param.L1 + param.H1;
+		const a1 = Math.atan2(param.H1, param.L1);
+		const a2 = a1 / 2;
 		// step-5 : checks on the parameter values
-		if (param.E1 > param.H1) {
+		if (param.E1 > param.H1 / 2 - minRadius) {
 			throw `err291: E1 ${param.E1} is too large compare to H1 ${param.H1}`;
 		}
 		// step-6 : any logs
-		rGeome.logstr += `doorstop length ${ffix(Ltot)} mm\n`;
+		rGeome.logstr += `doorstop length ${ffix(Ltot)} mm, angle ${ffix(radToDeg(a1))} degree\n`;
 		// step-7 : drawing of the figures
 		// fig1
 		const ctrDoorstop = contour(0, 0)
@@ -78,6 +83,19 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			.addCornerRounded(param.R1)
 			.closeSegStroke();
 		figProfile.addMain(ctrDoorstop);
+		figProfile.addMain(contourCircle(param.H1 / 2, param.H1 / 2, param.H1 / 2 - param.E1));
+		let x1 = param.L1;
+		let y1 = Math.tan(a2) * x1;
+		let radius = y1 - param.E1;
+		while (radius > minRadius) {
+			x1 = x1 - radius;
+			y1 = Math.tan(a2) * x1;
+			radius = y1 - param.E1;
+			figProfile.addMain(contourCircle(Ltot - x1, y1, radius));
+			x1 = x1 - radius - param.E1;
+			y1 = Math.tan(a2) * x1;
+			radius = y1 - param.E1;
+		}
 		// final figure list
 		rGeome.fig = {
 			profile: figProfile
