@@ -90,7 +90,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 				figTop.addMain(
 					ctrRectangle(
 						param.E2 + i * (param.Lx + param.E1),
-						param.E2 + j * (param.Lx + param.E1),
+						param.E2 + j * (param.Ly + param.E1),
 						param.Lx,
 						param.Ly,
 						param.R1
@@ -99,7 +99,19 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			}
 		}
 		// figFace
+		figFace.addMain(ctrRectangle(0, 0, LtotX, param.H1));
+		for (let i = 0; i < param.Nx; i++) {
+			figFace.addSecond(
+				ctrRectangle(param.E2 + i * (param.Lx + param.E1), 0, param.Lx, param.H1)
+			);
+		}
 		// figSide
+		figSide.addMain(ctrRectangle(0, 0, LtotY, param.H1));
+		for (let i = 0; i < param.Ny; i++) {
+			figSide.addSecond(
+				ctrRectangle(param.E2 + i * (param.Ly + param.E1), 0, param.Ly, param.H1)
+			);
+		}
 		// final figure list
 		rGeome.fig = {
 			faceTop: figTop,
