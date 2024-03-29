@@ -66,28 +66,30 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		// step-4 : some preparation calculation
 		const Rend = param.W1 / 2;
 		const Rstep = (param.W1 + param.E2) / 4;
-		const pc = [point(0, 0), point(Rstep, 0), point(Rstep, Rstep), point(0, Rstep)];
+		const pc = [point(0, 0), point(0, Rstep), point(-Rstep, Rstep), point(-Rstep, 0)];
 		// step-5 : checks on the parameter values
 		// step-6 : any logs
 		rGeome.logstr += `spiral step ${ffix(Rstep)} mm\n`;
 		// step-7 : drawing of the figures
 		// figTop
 		const posY: number[] = [];
-		const py = param.E1 + param.W1;
-		const ctrSpiral = contour(0, param.E1).addPointA(0, py).addSegArc(Rend, false, true);
-		posY.push(-py);
 		let Rs = param.E1 + param.W1;
-		let As = Math.PI / 2;
-		let pi = point(0, 0);
+		let As = Math.PI;
+		let pi = point(0, 0).translatePolar(As, Rs);
+		rGeome.logstr += `pi ${pi.cx} ${pi.cy}\n`;
+		const ctrSpiral = contour(-param.E1, 0)
+			.addPointA(pi.cx, pi.cy)
+			.addSegArc(Rend, false, true);
+		posY.push(pi.cx);
 		for (let i = 0; i < param.QuadrantNb; i++) {
 			As += Math.PI / 2;
 			pi = pc[i % 4].translatePolar(As, Rs);
 			ctrSpiral.addPointA(pi.cx, pi.cy).addSegArc(Rs, false, true);
 			Rs += Rstep;
 			if ((i - 1) % 4 === 0) {
-				posY.push(-pi.cy - param.W1);
+				posY.push(pi.cx - param.W1);
 			} else if ((i - 3) % 4 === 0) {
-				posY.push(-pi.cy);
+				posY.push(pi.cx);
 			}
 		}
 		Rs -= Rstep + param.W1;
