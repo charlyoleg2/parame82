@@ -32,7 +32,7 @@ jobs:
             - name: clean and install
               run: |
                   npm ci
-                  npm run degit_paxApps
+                  npm run quick_install_paxApps
                   npm i
 
             - name: Build and check
@@ -52,6 +52,8 @@ jobs:
 
             - name: Publish
               if: github.ref_type == 'tag'
-              run: npm run gh-publish
+              run: |
+                  npm run ci  # rebuild without env BASE_PATH
+                  npm run gh-publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
