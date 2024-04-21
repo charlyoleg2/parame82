@@ -7,6 +7,7 @@
 		"type": "git",
 		"url": "git+https://github.com/charlyoleg2/parame82.git"
 	},
+	"type": "module",
 	"homepage": "https://charlyoleg2.github.io/parame82/",
 	"keywords": [
 		"cad",
@@ -18,6 +19,10 @@
 		"gear"
 	],
 	"author": "charlyoleg2",
+	"workspaces": [
+		"desi82",
+		"paxApps/*"
+	],
 	"paxApps": {
 		"colorBg": "DarkCyan",
 		"colorTitle": "aquamarine",
@@ -27,8 +32,11 @@
 	},
 	"scripts": {
 		"degit_paxApps": "degit https://github.com/charlyoleg2/parame_paxApps/paxApps paxApps",
-		"del_package_lock": "shx rm package-lock.json",
-		"install_paxApps": "run-s degit_paxApps del_package_lock",
+		"del_package_lock": "shx rm -f package-lock.json",
+		"patch_paxApps": "patch -p0 -Nt < scr/patchPaxApps.patch",
+		"clean_patch": "shx rm -f paxApps/desiXY-cli/package.json.rej paxApps/desiXY-uis/package.json.rej",
+		"quick_install_paxApps": "run-s degit_paxApps patch_paxApps clean_patch",
+		"install_paxApps": "run-s quick_install_paxApps del_package_lock",
 		"clean_paxApps": "shx rm -fr paxApps",
 		"desi82:dev": "npm -w desi82 run dev",
 		"desi82:ci": "npm -w desi82 run ci",
@@ -36,7 +44,6 @@
 		"desi82:clean": "npm -w desi82 run clean",
 		"desi82:version": "npm -w desi82 version patch",
 		"desi82:publish": "npm -w desi82 publish --provenance",
-		"paxScr:cirun": "npm -w paxScr run cirun",
 		"paxScr:brun": "npm -w paxScr run brun",
 		"paxScr:clean": "npm -w paxScr run clean",
 		"desiXY-ui:dev": "npm -w desiXY-ui run dev",
@@ -44,22 +51,29 @@
 		"desiXY-ui:clean": "npm -w desiXY-ui run clean",
 		"desiXY-ui:preview": "npm -w desiXY-ui run preview",
 		"desiXY-cli:build": "npm -w desiXY-cli run build",
+		"desiXY-cli:run": "npm -w desiXY-cli run run",
 		"desiXY-cli:clean": "npm -w desiXY-cli run clean",
+		"desiXY-cli:version": "npm -w desiXY-cli version patch",
+		"desiXY-cli:publish": "npm -w desiXY-cli publish --provenance",
+		"desiXY-uis:build": "npm -w desiXY-uis run build",
+		"desiXY-uis:copy_public": "npm -w desiXY-uis run copy_public",
+		"desiXY-uis:run": "npm -w desiXY-uis run run",
+		"desiXY-uis:clean": "npm -w desiXY-uis run clean",
+		"desiXY-uis:version": "npm -w desiXY-uis version patch",
+		"desiXY-uis:publish": "npm -w desiXY-uis publish --provenance",
 		"dev": "run-p desi82:dev desiXY-ui:dev",
-		"ci": "run-s desi82:ci paxScr:brun desiXY-ui:build desiXY-cli:build",
+		"ci": "run-s desi82:ci paxScr:brun desiXY-ui:build desiXY-cli:build desiXY-uis:build desiXY-uis:copy_public",
 		"svgo": "run-s desi82:svgo",
 		"clean-root": "shx rm -fr tmp output output2",
-		"clean": "run-s clean-root desi82:clean paxScr:clean desiXY-ui:clean desiXY-cli:clean",
+		"clean": "run-s clean-root clean_patch desi82:clean paxScr:clean desiXY-ui:clean desiXY-cli:clean desiXY-uis:clean",
 		"preview": "run-s desiXY-ui:preview",
-		"versions": "run-s desi82:version",
-		"gh-publish": "run-s desi82:publish",
+		"run-uis": "run-s desiXY-uis:run",
+		"run-cli": "run-s desiXY-cli:run",
+		"msgVersion": "echo 'warn064: Upgrade manually the version-numbers in scr/patchPaxApps.patch'",
+		"versions": "run-s desi82:version desiXY-cli:version desiXY-uis:version msgVersion",
+		"gh-publish": "run-s desi82:publish desiXY-cli:publish desiXY-uis:publish",
 		"ls-workspaces": "npm -ws exec -c pwd"
 	},
-	"workspaces": [
-		"desi82",
-		"paxApps/*"
-	],
-	"type": "module",
 	"devDependencies": {
 		"degit": "^2.8.4",
 		"npm-run-all": "^4.1.5",
