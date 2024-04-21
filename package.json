@@ -36,7 +36,7 @@
 		"patch_paxApps": "patch -p0 -Nt < scr/patchPaxApps.patch",
 		"clean_patch": "shx rm -f paxApps/desiXY-cli/package.json.rej paxApps/desiXY-uis/package.json.rej",
 		"quick_install_paxApps": "run-s degit_paxApps patch_paxApps clean_patch",
-		"install_paxApps": "run-s quick_install_paxApps del_package_lock",
+		"install_paxApps": "run-s degit_paxApps del_package_lock",
 		"clean_paxApps": "shx rm -fr paxApps",
 		"desi82:dev": "npm -w desi82 run dev",
 		"desi82:ci": "npm -w desi82 run ci",
