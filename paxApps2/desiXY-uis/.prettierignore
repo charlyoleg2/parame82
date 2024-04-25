@@ -1,6 +1,0 @@
-# .prettierignore of desiXY-uis
-node_modules
-build
-dist
-tmp
-README.md
