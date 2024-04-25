@@ -1,0 +1,73 @@
+{
+	"name": "paxScr",
+	"description": "The script that generates the binding files for paxApps",
+	"version": "0.5.2",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/charlyoleg2/parame_paxApps.git"
+	},
+	"homepage": "https://github.com/charlyoleg2/parame_paxApps/tree/main/paxApps/paxScr#readme",
+	"author": "charlyoleg",
+	"license": "ISC",
+	"keywords": [
+		"parametrix",
+		"3D",
+		"CAD"
+	],
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/genBindings.d.ts",
+			"default": "./dist/genBindings.js"
+		}
+	},
+	"bin": "./dist/genBindings.js",
+	"tsup": {
+		"entry": [
+			"src/genBindings.ts"
+		],
+		"format": "esm",
+		"splitting": false,
+		"dts": false,
+		"sourcemap": false,
+		"clean": true
+	},
+	"scripts": {
+		"dev": "tsup --watch",
+		"build": "tsup",
+		"check": "tsc --noEmit",
+		"pretty": "prettier --check .",
+		"format": "prettier --write .",
+		"lint": "eslint .",
+		"test:unit": "vitest",
+		"test:unit:once": "vitest --run",
+		"test:bats": "bats test/test1.bats",
+		"ci": "run-s check build pretty lint test:unit:once test:bats",
+		"run": "dist/genBindings.js",
+		"runAll": "dist/genBindings.js all",
+		"cirun": "run-s ci runAll",
+		"brun": "run-s build runAll",
+		"clean": "shx rm -fr build dist node_modules output"
+	},
+	"dependencies": {
+		"fs-extra": "^11.2.0",
+		"geometrix": "^0.5.35",
+		"yargs": "^17.7.2"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
+		"@types/yargs": "^17.0.32",
+		"@typescript-eslint/eslint-plugin": "^7.1.1",
+		"@typescript-eslint/parser": "^7.1.1",
+		"bats": "^1.11.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"npm-run-all": "^4.1.5",
+		"prettier": "^3.2.5",
+		"shx": "^0.3.4",
+		"tsup": "^8.0.2",
+		"typescript": "^5.4.5",
+		"vitest": "^1.5.0"
+	}
+}
