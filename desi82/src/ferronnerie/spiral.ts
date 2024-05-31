@@ -4,6 +4,7 @@
 // step-1 : import from geometrix
 import type {
 	//tContour,
+	//tOuterInner,
 	tParamDef,
 	tParamVal,
 	tGeom,
@@ -103,10 +104,10 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			ctrSpiral.addPointA(pi.cx, pi.cy).addSegArc(Rs, false, false);
 			Rs -= Rstep;
 		}
-		figTop.addMain(ctrSpiral);
+		figTop.addMainO(ctrSpiral);
 		// figSide
 		for (const px of posY) {
-			figSide.addMain(ctrRectangle(px, 0, param.W1, param.H1));
+			figSide.addMainO(ctrRectangle(px, 0, param.W1, param.H1));
 		}
 		// final figure list
 		rGeome.fig = {

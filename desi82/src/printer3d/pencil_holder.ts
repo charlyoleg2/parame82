@@ -4,6 +4,7 @@
 // step-1 : import from geometrix
 import type {
 	//tContour,
+	tOuterInner,
 	tParamDef,
 	tParamVal,
 	tGeom,
@@ -85,10 +86,11 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		rGeome.logstr += `pencil_holder size ${ffix(LtotX)} x ${ffix(LtotY)} mm\n`;
 		// step-7 : drawing of the figures
 		// figTop
-		figTop.addMain(ctrRectangle(0, 0, LtotX, LtotY, param.R2));
+		const fTop: tOuterInner = [];
+		fTop.push(ctrRectangle(0, 0, LtotX, LtotY, param.R2));
 		for (let i = 0; i < param.Nx; i++) {
 			for (let j = 0; j < param.Ny; j++) {
-				figTop.addMain(
+				fTop.push(
 					ctrRectangle(
 						param.E2 + i * (param.Lx + param.E1),
 						param.E2 + j * (param.Ly + param.E1),
@@ -99,15 +101,16 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 				);
 			}
 		}
+		figTop.addMainOI(fTop);
 		// figFace
-		figFace.addMain(ctrRectangle(0, 0, LtotX, param.H1));
+		figFace.addMainO(ctrRectangle(0, 0, LtotX, param.H1));
 		for (let i = 0; i < param.Nx; i++) {
 			figFace.addSecond(
 				ctrRectangle(param.E2 + i * (param.Lx + param.E1), 0, param.Lx, param.H1)
 			);
 		}
 		// figSide
-		figSide.addMain(ctrRectangle(0, 0, LtotY, param.H1));
+		figSide.addMainO(ctrRectangle(0, 0, LtotY, param.H1));
 		for (let i = 0; i < param.Ny; i++) {
 			figSide.addSecond(
 				ctrRectangle(param.E2 + i * (param.Ly + param.E1), 0, param.Ly, param.H1)

@@ -4,6 +4,7 @@
 // step-1 : import from geometrix
 import type {
 	//tContour,
+	tOuterInner,
 	tParamDef,
 	tParamVal,
 	tGeom,
@@ -80,6 +81,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		rGeome.logstr += `doorstop length ${ffix(Ltot)} mm, angle ${ffix(radToDeg(a1))} degree\n`;
 		// step-7 : drawing of the figures
 		// figProfile
+		const fProfile: tOuterInner = [];
 		const ctrDoorstop = contour(0, 0)
 			.addCornerRounded(param.R1)
 			.addSegStrokeA(Ltot, 0)
@@ -89,8 +91,8 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			.addSegStrokeA(0, param.H1)
 			.addCornerRounded(param.R1)
 			.closeSegStroke();
-		figProfile.addMain(ctrDoorstop);
-		figProfile.addMain(contourCircle(param.H1 / 2, param.H1 / 2, param.H1 / 2 - param.E1));
+		fProfile.push(ctrDoorstop);
+		fProfile.push(contourCircle(param.H1 / 2, param.H1 / 2, param.H1 / 2 - param.E1));
 		const listPosX: number[] = [];
 		const listRadius: number[] = [];
 		let x1 = param.L1;
@@ -101,23 +103,24 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			y1 = Math.tan(a2) * x1;
 			radius = y1 - param.E1;
 			const tPosX = Ltot - x1;
-			figProfile.addMain(contourCircle(tPosX, y1, radius));
+			fProfile.push(contourCircle(tPosX, y1, radius));
 			listPosX.push(tPosX);
 			listRadius.push(radius);
 			x1 = x1 - radius - param.E1;
 			y1 = Math.tan(a2) * x1;
 			radius = y1 - param.E1;
 		}
+		figProfile.addMainOI(fProfile);
 		// figTop
-		figTop.addMain(ctrRectangle(0, 0, param.H1, param.W1));
-		figTop.addMain(ctrRectangle(param.H1, 0, param.L1, param.W1));
+		figTop.addMainO(ctrRectangle(0, 0, param.H1, param.W1));
+		figTop.addMainO(ctrRectangle(param.H1, 0, param.L1, param.W1));
 		figTop.addSecond(ctrRectangle(param.E1, 0, param.H1 - 2 * param.E1, param.W1));
 		for (const [idx, px] of listPosX.entries()) {
 			const tR = listRadius[idx];
 			figTop.addSecond(ctrRectangle(px - tR, 0, 2 * tR, param.W1));
 		}
 		// figSide
-		figSide.addMain(ctrRectangle(0, 0, param.W1, param.H1));
+		figSide.addMainO(ctrRectangle(0, 0, param.W1, param.H1));
 		figSide.addSecond(ctrRectangle(0, param.E1, param.W1, param.H1 - 2 * param.E1));
 		// final figure list
 		rGeome.fig = {
