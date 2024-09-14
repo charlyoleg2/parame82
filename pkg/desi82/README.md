@@ -5,7 +5,7 @@ Desi82
 Presentation
 ------------
 
-*Desi82* is collection of *geometrix* designs to be 3D-printed.
+*Desi82* is a *design library* based on [parametrix](https://charlyoleg2.github.io/parametrix/).
 
 It contains the following 3D-shapes:
 
@@ -34,4 +34,9 @@ cd parame82
 npm -w desi82 install
 npm -w desi82 run ci
 ```
+
+Dependencies
+------------
+
+*Desi82* runtime depends only on *Geometrix*. Use *desi82-ui* WebUI or *desi82-cli* CLI to visualize and export the designs in different formats like dxf, svg, gltf, stl, brep, step and others.
 
