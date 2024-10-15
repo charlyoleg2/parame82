@@ -47,7 +47,7 @@
 		"ci2": "run-s desi82:ci desi82-ui:ci",
 		"ci3": "run-s desi82:ci desi82-cli:ci",
 		"svgo": "run-s desi82:svgo",
-		"clean-root": "shx rm -fr tmp output output2",
+		"clean-root": "rimraf tmp output output2",
 		"clean": "run-s clean-root desi82:clean desi82-ui:clean desi82-cli:clean desi82-uis:clean",
 		"preview": "run-s desi82-ui:preview",
 		"run-uis": "run-s desi82-uis:run",
@@ -58,6 +58,6 @@
 	},
 	"devDependencies": {
 		"npm-run-all": "^4.1.5",
-		"shx": "^0.3.4"
+		"rimraf": "^6.0.1"
 	}
 }
