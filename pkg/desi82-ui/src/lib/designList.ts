@@ -1,7 +1,7 @@
 // designList.ts
 
 import type { tAllPageDef } from 'geometrix';
-import { doorstopDef, pencilHolderDef, lettreLDef, spiralDef } from 'desi82';
+import { doorstopDef, pencilHolderDef, lettreLDef, spiralDef, voilaDef, myBoxDef } from 'desi82';
 
 const designList: tAllPageDef = {
 	'desi82/doorstop': doorstopDef,
