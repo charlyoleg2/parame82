@@ -1,18 +1,20 @@
-desi82-uis
+Desi82-uis
 ==========
 
 
 Presentation
 ------------
 
-*desi82-uis* is the static web-server of the web-app *desi82-ui*.
+*desi82-uis* is the mini-server package for enabling the local installation of the web-ui *desi82-ui*.
+
+Usually, this mini-server package desi82-uis is part of a mono-repo containing an other package for the web-ui and potentially an *universal* library backing the web-ui.
 
 
 Requirements
 ------------
 
-- [node](https://nodejs.org) > 20.10.0
-- [npm](https://docs.npmjs.com/cli) > 10.1.0
+- [node](https://nodejs.org) > 22.0.0
+- [npm](https://docs.npmjs.com/cli) > 11.0.0
 
 
 Installation
@@ -39,17 +41,5 @@ Usage without installation
 npx desi82-uis
 npx --package=desi82-uis desi82-uis
 npx --package=desi82-uis desi82-uis --help
-```
-
-
-Development
------------
-
-```bash
-git clone https://github.com/charlyoleg2/parame82
-cd parame82
-npm install
-npm run ci
-npm -w desi82-uis run run
 ```
 
