@@ -1,6 +1,6 @@
 {
 	"name": "parame82",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "The mono-repo for desi82, desi82-cli, desi82-ui and desi82-uis",
 	"private": true,
 	"repository": {
