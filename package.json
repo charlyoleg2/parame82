@@ -57,7 +57,7 @@
 		"ls-workspaces": "npm -ws exec -c pwd"
 	},
 	"devDependencies": {
-		"npm-run-all2": "^9.0.0",
+		"npm-run-all2": "^9.0.3",
 		"rimraf": "^6.1.3"
 	}
 }
